@@ -2,18 +2,17 @@ import React, {useContext} from 'react';
 import { AppContext } from '../context/AppContext';
 
 const Currency = ()=> {
-   // const {currency} = useContext(AppContext);
     const {dispatch} = useContext(AppContext);
 
     return (
-        <div className={`alert alert-success`}>
+        <div className = {`alert alert-success`}>
            <span id = 'currentcy_span'> Currency (
                 <select name="curr" id="curr" onChange={(event) =>  
                 dispatch ({
                         type: 'CHG_CURRENCY',
                         payload: event.target.value,
                     })}
-                >
+                > 
                 <option value="$"> $ Dollar</option>
                 <option value="£"> £ Pound</option>
                 <option value="€"> € Euro</option>
