@@ -1,4 +1,5 @@
 import React, { createContext, useReducer } from 'react';
+import ExpenseTotal from '../components/ExpenseTotal';
 
 // 5. The reducer - this is used to update the state, based on the action
 export const AppReducer = (state, action) => {
@@ -59,16 +60,43 @@ export const AppReducer = (state, action) => {
             };
         case 'SET_BUDGET':
             action.type = "DONE";
-            state.budget = action.payload;
+            if (action.payload>20000) {
+                alert("Budget cannot exceed 20,000");
+                budget = 20000;
+                state.budget = budget
+                return {
+                    ...state,
+                    budget
+                }
+            }
+            else {
+                const totalExpenses = state.expenses.reduce((total, item) => {
+                    return (total += item.cost);
+                }, 0);
 
-            return {
-                ...state,
-            };
+                if (action.payload< totalExpenses) {
+                    alert("Budget cannot be lower than expenses");
+                    budget = totalExpenses
+                    state.budget = budget
+                    return {
+                        ...state,
+                        budget
+                    }
+                }
+                else {
+                    state.budget = action.payload;
+                    return {
+                    ...state,
+                    budget
+                    }
+                }
+            }
         case 'CHG_CURRENCY':
             action.type = "DONE";
             state.currency = action.payload;
             return {
-                ...state
+                ...state,
+                currency: action.payload
             }
 
         default:
@@ -95,7 +123,7 @@ export const AppContext = createContext();
 // 3. Provider component - wraps the components we want to give access to the state
 // Accepts the children, which are the nested(wrapped) components
 export const AppProvider = (props) => {
-    // 4. Sets up the app state. takes a reducer, and an initial state
+// 4. Sets up the app state. takes a reducer, and an initial state
     const [state, dispatch] = useReducer(AppReducer, initialState);
     let remaining = 0;
 
