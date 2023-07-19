@@ -1,5 +1,5 @@
 import React, { createContext, useReducer } from 'react';
-import ExpenseTotal from '../components/ExpenseTotal';
+//import ExpenseTotal from '../components/ExpenseTotal';
 
 // 5. The reducer - this is used to update the state, based on the action
 export const AppReducer = (state, action) => {
@@ -62,11 +62,11 @@ export const AppReducer = (state, action) => {
             action.type = "DONE";
             if (action.payload>20000) {
                 alert("Budget cannot exceed 20,000");
-                budget = 20000;
-                state.budget = budget
+                //budget = 20000;
+                //state.budget = budget
                 return {
-                    ...state,
-                    budget
+                    state
+                   // budget
                 }
             }
             else {
@@ -76,11 +76,11 @@ export const AppReducer = (state, action) => {
 
                 if (action.payload< totalExpenses) {
                     alert("Budget cannot be lower than expenses");
-                    budget = totalExpenses
-                    state.budget = budget
+                    //budget = totalExpenses
+                    //state.budget = budget
                     return {
-                        ...state,
-                        budget
+                        state
+                    //    budget
                     }
                 }
                 else {
